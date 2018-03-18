@@ -16,7 +16,7 @@ import com.mm.po.theater.service.TheaterInputService;
  * @author Arun Devadoss
  *
  */
-public class TheatreSeatingServiceTest {
+public class TheatreInputServiceTest {
 
 	private TheaterInputService inputService;
 
