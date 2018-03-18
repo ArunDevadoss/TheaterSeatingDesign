@@ -2,9 +2,9 @@
 
 Please follow the below steps to run the production ready artifact for the Theater Seating problem.
 
-##Pre-Requisite:
+## Pre-Requisite:
 
-The machine should have minimum JRE of 8 and above version in order to run the artifact
+The machine should have minimum **JRE 8** and above version in order to run the artifact
 
 1)	Download the TheaterSeatingDesign.jar from the following github link.
 
