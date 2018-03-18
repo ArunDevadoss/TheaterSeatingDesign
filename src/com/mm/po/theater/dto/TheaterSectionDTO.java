@@ -23,26 +23,6 @@ public class TheaterSectionDTO {
 
 	/**
 	 * 
-	 */
-	public TheaterSectionDTO() {
-
-	}
-
-	/**
-	 * 
-	 * @param rowNumber
-	 * @param sectionNumber
-	 * @param availableSeats
-	 */
-	public TheaterSectionDTO(int rowNumber, int sectionNumber, int availableSeats) {
-		super();
-		this.rowNumber = rowNumber;
-		this.sectionNumber = sectionNumber;
-		this.availableSeats = availableSeats;
-	}
-
-	/**
-	 * 
 	 * @return
 	 */
 	public int getRowNumber() {
@@ -87,12 +67,6 @@ public class TheaterSectionDTO {
 	 */
 	public void setAvailableSeats(int availableSeats) {
 		this.availableSeats = availableSeats;
-	}
-
-	@Override
-	public String toString() {
-		return "TheaterSection [rowNumber=" + rowNumber + ", sectionNumber=" + sectionNumber + ", availableSeats="
-				+ availableSeats + "]";
 	}
 
 }

@@ -21,23 +21,6 @@ public class TheaterRequestDTO {
 
 	/**
 	 * 
-	 */
-	public TheaterRequestDTO() {
-
-	}
-
-	/**
-	 * 
-	 * @param personName
-	 * @param noOfTickets
-	 */
-	public TheaterRequestDTO(String personName, int noOfTickets) {
-		this.personName = personName;
-		this.noOfTickets = noOfTickets;
-	}
-
-	/**
-	 * 
 	 * @return
 	 */
 	public String getName() {
@@ -82,12 +65,6 @@ public class TheaterRequestDTO {
 	 */
 	public void setRequestCompleted(boolean requestCompleted) {
 		this.requestCompleted = requestCompleted;
-	}
-
-	@Override
-	public String toString() {
-		return "TheaterRequest [personName=" + personName + ", noOfTickets=" + noOfTickets + ", requestCompleted="
-				+ requestCompleted + "]";
 	}
 
 }

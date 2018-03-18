@@ -101,10 +101,12 @@ public class TheaterInputService {
 	 */
 	private void transformTheaterRequests(final List<String> requests, final List<TheaterRequestDTO> theaterRequests)
 			throws InvalidTheaterRequestException, InvalidTicketNumberException {
-
+		TheaterRequestDTO theaterRequest;
 		try {
-
-			theaterRequests.add(new TheaterRequestDTO(requests.get(0).trim(), Integer.valueOf(requests.get(1).trim())));
+			theaterRequest = new TheaterRequestDTO();
+			theaterRequest.setName(requests.get(0).trim());
+			theaterRequest.setNoOfTickets(Integer.valueOf(requests.get(1).trim()));
+			theaterRequests.add(theaterRequest);
 
 		} catch (NumberFormatException nfe) {
 			throw new InvalidTicketNumberException("Please enter valid ticket request, tickets should be number");
@@ -128,12 +130,17 @@ public class TheaterInputService {
 		final List<String> sections = Stream.of(line.split(TheaterConstants.BLACK_SPACE)).collect(Collectors.toList());
 
 		for (final String section : sections) {
+			TheaterSectionDTO theaterSection;
 
 			try {
+				theaterSection = new TheaterSectionDTO();
 				theater.setTotalAvailableCapacity(
 						theater.getTotalAvailableCapacity() + Integer.valueOf(section.trim()));
-				theaterSections.add(new TheaterSectionDTO(rowCount.get() + 1, sectionCount.get() + 1,
-						Integer.valueOf(section.trim())));
+
+				theaterSection.setRowNumber(rowCount.get() + 1);
+				theaterSection.setSectionNumber(sectionCount.get() + 1);
+				theaterSection.setAvailableSeats(Integer.valueOf(section.trim()));
+				theaterSections.add(theaterSection);
 			} catch (NumberFormatException nfe) {
 				throw new InvalidTheaterLayoutException("Please enter valid theater layout, accepts only numbers");
 			}

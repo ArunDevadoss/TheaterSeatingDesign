@@ -18,6 +18,8 @@ public class TheaterRequestProcessService {
 
 	/**
 	 * 
+	 * Process all the incoming threatre request based on section and available
+	 * seats
 	 * 
 	 * @param theaterInformation
 	 */
@@ -25,7 +27,7 @@ public class TheaterRequestProcessService {
 		final AtomicInteger rowCount = new AtomicInteger(0);
 
 		System.out.println(TheaterConstants.SEAT_DISTRIBUTION);
-		for (TheaterRequestDTO theaterRequest : theaterInformation.getTheaterRequests()) {
+		for (final TheaterRequestDTO theaterRequest : theaterInformation.getTheaterRequests()) {
 			// skip the iteration when request is completed
 			boolean isMaxRequest = false;
 			if (theaterRequest.getNoOfTickets() > theaterInformation.getTotalAvailableCapacity()) {
