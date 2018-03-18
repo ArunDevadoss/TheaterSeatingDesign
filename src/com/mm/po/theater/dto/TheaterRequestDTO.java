@@ -23,16 +23,16 @@ public class TheaterRequestDTO {
 	 * 
 	 * @return
 	 */
-	public String getName() {
+	public String getPersonName() {
 		return personName;
 	}
 
 	/**
 	 * 
-	 * @param name
+	 * @param personName
 	 */
-	public void setName(String name) {
-		this.personName = name;
+	public void setPersonName(String personName) {
+		this.personName = personName;
 	}
 
 	/**
@@ -59,10 +59,6 @@ public class TheaterRequestDTO {
 		return requestCompleted;
 	}
 
-	/**
-	 * 
-	 * @param requestCompleted
-	 */
 	public void setRequestCompleted(boolean requestCompleted) {
 		this.requestCompleted = requestCompleted;
 	}

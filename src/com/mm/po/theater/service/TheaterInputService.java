@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.mm.po.theater.constant.TheaterConstants;
-import com.mm.po.theater.dto.TheaterDTO;
 import com.mm.po.theater.dto.TheaterRequestDTO;
 import com.mm.po.theater.dto.TheaterSectionDTO;
 import com.mm.po.theater.exception.InvalidTheaterLayoutException;
@@ -21,6 +20,9 @@ import com.mm.po.theater.exception.InvalidTicketNumberException;
  *
  */
 public class TheaterInputService {
+
+	private List<TheaterRequestDTO> theaterRequests = new ArrayList<>();
+	private List<TheaterSectionDTO> theaterSections = new ArrayList<>();
 
 	/**
 	 * 
@@ -35,7 +37,8 @@ public class TheaterInputService {
 		TheaterRequestProcessService theaterSeatingService;
 
 		theaterSeatingService = new TheaterRequestProcessService();
-		theaterSeatingService.processTicketRequests(getTheaterLayoutRequestInfo(input));
+		getTheaterLayoutRequestInfo(input);
+		theaterSeatingService.processTicketRequests(theaterRequests, theaterSections);
 
 	}
 
@@ -47,22 +50,19 @@ public class TheaterInputService {
 	 * @throws InvalidTheaterLayoutException
 	 * @throws InvalidTicketNumberException
 	 */
-	private TheaterDTO getTheaterLayoutRequestInfo(final Scanner input)
+	private void getTheaterLayoutRequestInfo(final Scanner input)
 			throws InvalidTheaterRequestException, InvalidTheaterLayoutException, InvalidTicketNumberException {
 
 		String line;
 		boolean isLayoutCompleted = false;
 
-		final List<TheaterRequestDTO> theaterRequests = new ArrayList<>();
-		final List<TheaterSectionDTO> theaterSections = new ArrayList<>();
 		final AtomicInteger rowCount = new AtomicInteger(0);
-		final TheaterDTO theater = new TheaterDTO();
 
 		while ((line = input.nextLine()) != null && !line.equals(TheaterConstants.END_OF_REQUEST)) {
 
 			if (line.length() != 0 && !isLayoutCompleted) {
 
-				transformTheaterLayout(line, theaterSections, rowCount, theater);
+				transformTheaterLayout(line, theaterSections, rowCount);
 
 			} else {
 
@@ -83,11 +83,8 @@ public class TheaterInputService {
 
 		}
 
-		theater.setTheaterSections(theaterSections);
-		theater.setTheaterRequests(theaterRequests);
 		input.close();
 
-		return theater;
 	}
 
 	/**
@@ -104,7 +101,7 @@ public class TheaterInputService {
 		TheaterRequestDTO theaterRequest;
 		try {
 			theaterRequest = new TheaterRequestDTO();
-			theaterRequest.setName(requests.get(0).trim());
+			theaterRequest.setPersonName(requests.get(0).trim());
 			theaterRequest.setNoOfTickets(Integer.valueOf(requests.get(1).trim()));
 			theaterRequests.add(theaterRequest);
 
@@ -123,8 +120,7 @@ public class TheaterInputService {
 	 * @throws InvalidTheaterLayoutException
 	 */
 	private void transformTheaterLayout(final String line, final List<TheaterSectionDTO> theaterSections,
-			final AtomicInteger rowCount, final TheaterDTO theater)
-			throws InvalidTheaterRequestException, InvalidTheaterLayoutException {
+			final AtomicInteger rowCount) throws InvalidTheaterRequestException, InvalidTheaterLayoutException {
 		final AtomicInteger sectionCount = new AtomicInteger(0);
 
 		final List<String> sections = Stream.of(line.split(TheaterConstants.BLACK_SPACE)).collect(Collectors.toList());
@@ -134,8 +130,6 @@ public class TheaterInputService {
 
 			try {
 				theaterSection = new TheaterSectionDTO();
-				theater.setTotalAvailableCapacity(
-						theater.getTotalAvailableCapacity() + Integer.valueOf(section.trim()));
 
 				theaterSection.setRowNumber(rowCount.get() + 1);
 				theaterSection.setSectionNumber(sectionCount.get() + 1);

@@ -1,10 +1,10 @@
 package com.mm.po.theater.service;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 import com.mm.po.theater.constant.TheaterConstants;
-import com.mm.po.theater.dto.TheaterDTO;
 import com.mm.po.theater.dto.TheaterRequestDTO;
 import com.mm.po.theater.dto.TheaterSectionDTO;
 
@@ -23,20 +23,22 @@ public class TheaterRequestProcessService {
 	 * 
 	 * @param theaterInformation
 	 */
-	public void processTicketRequests(final TheaterDTO theaterInformation) {
+	public void processTicketRequests(final List<TheaterRequestDTO> theaterRequests,
+			final List<TheaterSectionDTO> theaterSections) {
 		final AtomicInteger rowCount = new AtomicInteger(0);
+		int availableSeats = theaterSections.stream().mapToInt(o -> o.getAvailableSeats()).sum();
 
 		System.out.println(TheaterConstants.SEAT_DISTRIBUTION);
-		for (final TheaterRequestDTO theaterRequest : theaterInformation.getTheaterRequests()) {
+		for (final TheaterRequestDTO theaterRequest : theaterRequests) {
 			// skip the iteration when request is completed
 			boolean isMaxRequest = false;
-			if (theaterRequest.getNoOfTickets() > theaterInformation.getTotalAvailableCapacity()) {
+			if (theaterRequest.getNoOfTickets() > availableSeats) {
 				isMaxRequest = true;
-				System.out.println(
-						theaterRequest.getName() + TheaterConstants.BLACK_SPACE + TheaterConstants.CANNOT_HANDLE_PARTY);
+				System.out.println(theaterRequest.getPersonName() + TheaterConstants.BLACK_SPACE
+						+ TheaterConstants.CANNOT_HANDLE_PARTY);
 			} else {
 
-				for (final TheaterSectionDTO theaterSection : theaterInformation.getTheaterSections()) {
+				for (final TheaterSectionDTO theaterSection : theaterSections) {
 					// Full fill the request when number of tickets equals
 					// available
 					// seats
@@ -56,11 +58,11 @@ public class TheaterRequestProcessService {
 						// the demand/request
 
 						int requestNo = IntStream
-								.range(rowCount.get() + 1, theaterInformation.getTheaterRequests().size()).filter(
-										a -> !theaterInformation.getTheaterRequests().get(a).isRequestCompleted()
-												&& (theaterInformation.getTheaterRequests().get(a)
+								.range(rowCount.get() + 1, theaterRequests.size()).filter(
+										a -> !theaterRequests.get(a).isRequestCompleted()
+												&& (theaterRequests).get(a)
 														.getNoOfTickets() == (theaterSection.getAvailableSeats()
-																- theaterRequest.getNoOfTickets())))
+																- theaterRequest.getNoOfTickets()))
 								.findFirst().orElse(-1);
 
 						if (requestNo != -1) {
@@ -77,7 +79,7 @@ public class TheaterRequestProcessService {
 							// Find the first matching section for which
 							// requested tickets can be full filled
 
-							TheaterSectionDTO filteredTheaterSection = theaterInformation.getTheaterSections().stream()
+							TheaterSectionDTO filteredTheaterSection = theaterSections.stream()
 									.filter(section -> section.getAvailableSeats() == theaterRequest.getNoOfTickets())
 									.findFirst().orElse(null);
 							if (null != filteredTheaterSection) {
@@ -102,7 +104,7 @@ public class TheaterRequestProcessService {
 			if (!theaterRequest.isRequestCompleted() && !isMaxRequest) {
 
 				System.out.println(
-						theaterRequest.getName() + TheaterConstants.BLACK_SPACE + TheaterConstants.SPLIT_PARTY);
+						theaterRequest.getPersonName() + TheaterConstants.BLACK_SPACE + TheaterConstants.SPLIT_PARTY);
 
 			}
 			rowCount.getAndIncrement();
@@ -123,7 +125,7 @@ public class TheaterRequestProcessService {
 
 		theaterRequest.setRequestCompleted(true);
 		if (theaterRequest.isRequestCompleted()) {
-			System.out.println(theaterRequest.getName() + TheaterConstants.BLACK_SPACE + TheaterConstants.ROW
+			System.out.println(theaterRequest.getPersonName() + TheaterConstants.BLACK_SPACE + TheaterConstants.ROW
 					+ theaterSection.getRowNumber() + TheaterConstants.BLACK_SPACE + TheaterConstants.SECTION
 					+ theaterSection.getSectionNumber());
 		}
