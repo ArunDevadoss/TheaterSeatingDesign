@@ -7,6 +7,13 @@ package com.mm.po.theater.constant;
  */
 public class TheaterConstants {
 
-	public static final String SPACE = " ";
+	public static final String BLACK_SPACE = " ";
+	public static final String END_OF_REQUEST = "end";
+	public static final String INVALID_THEATER_REQUEST = "Please enter valid theater request with name followed by no of tickets";
+	public static final String SPLIT_PARTY = "Call to split party.";
+	public static final String ROW = "Row ";
+	public static final String SECTION = "Section  ";
+	public static final String CANNOT_HANDLE_PARTY = "Sorry, we can't handle your party.";
+	public static final String SEAT_DISTRIBUTION = "Seats Distribution.\n";
 
 }

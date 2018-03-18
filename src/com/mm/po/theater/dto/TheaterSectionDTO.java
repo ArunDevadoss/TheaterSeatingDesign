@@ -89,4 +89,10 @@ public class TheaterSectionDTO {
 		this.availableSeats = availableSeats;
 	}
 
+	@Override
+	public String toString() {
+		return "TheaterSection [rowNumber=" + rowNumber + ", sectionNumber=" + sectionNumber + ", availableSeats="
+				+ availableSeats + "]";
+	}
+
 }
