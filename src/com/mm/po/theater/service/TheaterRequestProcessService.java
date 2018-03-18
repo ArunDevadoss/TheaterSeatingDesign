@@ -30,9 +30,10 @@ public class TheaterRequestProcessService {
 
 		System.out.println(TheaterConstants.SEAT_DISTRIBUTION);
 		for (final TheaterRequestDTO theaterRequest : theaterRequests) {
-			// skip the iteration when request is completed
+			
 			boolean isMaxRequest = false;
 			if (theaterRequest.getNoOfTickets() > availableSeats) {
+				// No of tickets is more than available seats 
 				isMaxRequest = true;
 				System.out.println(theaterRequest.getPersonName() + TheaterConstants.BLACK_SPACE
 						+ TheaterConstants.CANNOT_HANDLE_PARTY);
