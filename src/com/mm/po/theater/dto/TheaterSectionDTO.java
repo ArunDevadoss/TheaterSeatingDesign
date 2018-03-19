@@ -69,4 +69,38 @@ public class TheaterSectionDTO {
 		this.availableSeats = availableSeats;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + availableSeats;
+		result = prime * result + rowNumber;
+		result = prime * result + sectionNumber;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TheaterSectionDTO other = (TheaterSectionDTO) obj;
+		if (availableSeats != other.availableSeats)
+			return false;
+		if (rowNumber != other.rowNumber)
+			return false;
+		if (sectionNumber != other.sectionNumber)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "TheaterSectionDTO [rowNumber=" + rowNumber + ", sectionNumber=" + sectionNumber + ", availableSeats="
+				+ availableSeats + "]";
+	}
+
 }
