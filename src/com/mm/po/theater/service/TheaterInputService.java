@@ -38,7 +38,12 @@ public class TheaterInputService {
 
 		theaterSeatingService = new TheaterRequestProcessService();
 		getTheaterLayoutRequestInfo(input);
-		theaterSeatingService.processTicketRequests(theaterRequests, theaterSections);
+		if (null != theaterRequests && theaterRequests.size() > 0 && null != theaterSections
+				&& theaterSections.size() > 0) {
+			theaterSeatingService.processTicketRequests(theaterRequests, theaterSections);
+		} else {
+			System.out.println(TheaterConstants.UNABLE_TO_PROCESS);
+		}
 
 	}
 
@@ -106,7 +111,7 @@ public class TheaterInputService {
 			theaterRequests.add(theaterRequest);
 
 		} catch (NumberFormatException nfe) {
-			throw new InvalidTicketNumberException("Please enter valid ticket request, tickets should be number");
+			throw new InvalidTicketNumberException(TheaterConstants.INVALID_TICKET_NUMBER);
 		}
 	}
 
@@ -136,7 +141,7 @@ public class TheaterInputService {
 				theaterSection.setAvailableSeats(Integer.valueOf(section.trim()));
 				theaterSections.add(theaterSection);
 			} catch (NumberFormatException nfe) {
-				throw new InvalidTheaterLayoutException("Please enter valid theater layout, accepts only numbers");
+				throw new InvalidTheaterLayoutException(TheaterConstants.INVALID_THEATER_LAYOUT);
 			}
 			sectionCount.getAndIncrement();
 		}

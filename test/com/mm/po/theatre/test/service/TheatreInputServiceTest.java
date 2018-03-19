@@ -109,6 +109,21 @@ public class TheatreInputServiceTest {
 
 	}
 
+	/**
+	 * 
+	 * @throws InvalidTheaterRequestException
+	 * @throws InvalidTheaterLayoutException
+	 * @throws InvalidTicketNumberException
+	 */
+	@Test
+	public void test_processTicketRequests_No_Input()
+			throws InvalidTheaterRequestException, InvalidTheaterLayoutException, InvalidTicketNumberException {
+
+		String rawLayout = new StringBuilder("end").toString();
+		inputService.handleTheaterInput(new Scanner(rawLayout));
+
+	}
+
 	@Test(expected = InvalidTheaterRequestException.class)
 	public void test_InvalidTheaterRequest()
 			throws InvalidTheaterRequestException, InvalidTheaterLayoutException, InvalidTicketNumberException {
