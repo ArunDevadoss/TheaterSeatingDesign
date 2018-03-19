@@ -12,7 +12,7 @@ The machine should have minimum **JRE 8** and above version in order to run the 
 
 2) Navigate to the folder where you have downloaded the jar file.
 
-3) Execute the following command from windows machine
+3) Execute the following command from windows/mac machine.
 	
 		java -jar TheaterSeatingDesign.jar
 	
