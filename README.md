@@ -49,6 +49,7 @@ The machine should have minimum **JRE 8** and above version in order to run the 
 				Brown Row 4  Section 2
 				Miller Call to split party.
 
+Note : Attached code coverage report too.
 
 ## Problem Statement:
 
