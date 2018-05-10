@@ -30,13 +30,13 @@ public class TheaterRequestProcessService {
 
 		System.out.println(TheaterConstants.SEAT_DISTRIBUTION);
 		for (final TheaterRequestDTO theaterRequest : theaterRequests) {
-			
+
 			boolean isMaxRequest = false;
 			if (theaterRequest.getNoOfTickets() > availableSeats) {
-				// No of tickets is more than available seats 
+				// No of tickets is more than available seats
 				isMaxRequest = true;
-				System.out.println(theaterRequest.getPersonName() + TheaterConstants.BLACK_SPACE
-						+ TheaterConstants.CANNOT_HANDLE_PARTY);
+				System.out.println(new StringBuffer(theaterRequest.getPersonName()).append(TheaterConstants.BLACK_SPACE)
+						.append(TheaterConstants.CANNOT_HANDLE_PARTY).toString());
 			} else {
 
 				for (final TheaterSectionDTO theaterSection : theaterSections) {
@@ -86,7 +86,8 @@ public class TheaterRequestProcessService {
 							if (null != filteredTheaterSection) {
 								fullfillTheaterRequest(theaterRequest, filteredTheaterSection);
 							} else {
-								// If there is no matching section available, then use the current section to
+								// If there is no matching section available,
+								// then use the current section to
 								// full fill the request
 								fullfillTheaterRequest(theaterRequest, theaterSection);
 							}
@@ -104,8 +105,8 @@ public class TheaterRequestProcessService {
 			// set -1 is when we need to split the party.
 			if (!theaterRequest.isRequestCompleted() && !isMaxRequest) {
 
-				System.out.println(
-						theaterRequest.getPersonName() + TheaterConstants.BLACK_SPACE + TheaterConstants.SPLIT_PARTY);
+				System.out.println(new StringBuffer(theaterRequest.getPersonName()).append(TheaterConstants.BLACK_SPACE)
+						.append(TheaterConstants.SPLIT_PARTY).toString());
 
 			}
 			rowCount.getAndIncrement();
@@ -121,14 +122,15 @@ public class TheaterRequestProcessService {
 	 */
 	private void fullfillTheaterRequest(final TheaterRequestDTO theaterRequest,
 			final TheaterSectionDTO theaterSection) {
-
 		theaterSection.setAvailableSeats(theaterSection.getAvailableSeats() - theaterRequest.getNoOfTickets());
 
 		theaterRequest.setRequestCompleted(true);
 		if (theaterRequest.isRequestCompleted()) {
-			System.out.println(theaterRequest.getPersonName() + TheaterConstants.BLACK_SPACE + TheaterConstants.ROW
-					+ theaterSection.getRowNumber() + TheaterConstants.BLACK_SPACE + TheaterConstants.SECTION
-					+ theaterSection.getSectionNumber());
+
+			System.out.println(new StringBuffer(theaterRequest.getPersonName()).append(TheaterConstants.BLACK_SPACE)
+					.append(TheaterConstants.ROW).append(theaterSection.getRowNumber())
+					.append(TheaterConstants.BLACK_SPACE).append(TheaterConstants.SECTION)
+					.append(theaterSection.getSectionNumber()).toString());
 		}
 
 	}
