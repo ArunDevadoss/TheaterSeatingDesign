@@ -41,8 +41,7 @@ public class TheaterRequestProcessService {
 
 				for (final TheaterSectionDTO theaterSection : theaterSections) {
 					// Full fill the request when number of tickets equals
-					// available
-					// seats
+					// available seats
 
 					if (theaterRequest.getNoOfTickets() == theaterSection.getAvailableSeats()) {
 
@@ -51,12 +50,9 @@ public class TheaterRequestProcessService {
 
 					} else if (theaterRequest.getNoOfTickets() < theaterSection.getAvailableSeats()) {
 
-						// Find first available section which for which ticket
-						// can be served.
-						// requestNo != -1 , seats will be available after full
-						// filling the demand/request.
-						// requestNo == -1 , seats can be perfectly matched with
-						// the demand/request
+						// Check any left over seats can be full filled by the
+						// upcoming request(i,e when requestNo != 1) once
+						// current request is served.
 
 						int requestNo = IntStream
 								.range(rowCount.get() + 1, theaterRequests.size()).filter(
@@ -68,9 +64,11 @@ public class TheaterRequestProcessService {
 
 						if (requestNo != -1) {
 
-							// Seats will be still available after full filling
-							// the request/demand , so that can be used for
-							// other requests
+							// If requestNo != -1 , that corresponding request
+							// can be full filled with the left over seats from
+							// the current request. Hence full fill
+							// the current section.
+
 							fullfillTheaterRequest(theaterRequest, theaterSection);
 
 							break;
@@ -78,7 +76,7 @@ public class TheaterRequestProcessService {
 						} else {
 
 							// Find the first matching section for which
-							// requested tickets can be full filled
+							// requested tickets can be completely full filled
 
 							TheaterSectionDTO filteredTheaterSection = theaterSections.stream()
 									.filter(section -> section.getAvailableSeats() == theaterRequest.getNoOfTickets())
